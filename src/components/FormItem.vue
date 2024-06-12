@@ -3,8 +3,10 @@ import { defineComponent, ref } from 'vue'
 
 interface ModelData {
   modelId: string
-  tags: string[]
+  pipeline_tag: string
   co2_eq_emissions: number | string
+  safetensors: number
+  downloads: number
   cardData?: {
     co2_eq_emissions: number
   }
@@ -19,26 +21,31 @@ export default defineComponent({
 
     const fetchModelData = async () => {
       try {
-        const response = await fetch(
-          `https://huggingface.co/api/models?cardData=true&search=${modelName.value}`
-        )
+        const response = await fetch(`https://huggingface.co/api/models/${modelName.value}`)
         if (!response.ok) {
-          throw new Error('Network response was not ok')
+          console.log(response.status)
+          if (response.status == 401)
+            throw new Error(
+              'Incorrect request or model not found or access to the model is limited.'
+            )
+          throw new Error('An error occurred while fetching the model data.')
         }
-        const models = await response.json()
-        if (models.length > 0) {
+        const model = await response.json()
+        if (model) {
           modelData.value = {
-            modelId: models[0].modelId,
-            tags: models[0].tags,
-            co2_eq_emissions: models[0].cardData?.co2_eq_emissions ?? 'Unknown'
+            modelId: model.modelId,
+            pipeline_tag: model.pipeline_tag,
+            co2_eq_emissions:
+              model.cardData?.co2_eq_emissions?.emissions ??
+              model.cardData?.co2_eq_emissions ??
+              'Unknown',
+            safetensors: model.safetensors.total,
+            downloads: model.downloads
           }
           errorMessage.value = ''
-        } else {
-          errorMessage.value = 'Model not found.'
-          modelData.value = null
         }
       } catch (error) {
-        errorMessage.value = 'An error occurred while fetching the model data.'
+        errorMessage.value = error as string
         modelData.value = null
       }
     }
@@ -72,12 +79,14 @@ export default defineComponent({
     <h2 class="text-2xl font-bold text-green-500">Model Details</h2>
     <h3 class="text-lg font-bold mt-6">Name:</h3>
     <p class="ml-2">{{ modelData.modelId }}</p>
-    <h3 class="text-lg font-bold mt-4">Tags:</h3>
-    <ul class="list-disc ml-6">
-      <li v-for="tag in modelData.tags" :key="tag">{{ tag }}</li>
-    </ul>
+    <h3 class="text-lg font-bold mt-4">Pipeline_tag:</h3>
+    <p class="ml-2">{{ modelData.pipeline_tag }}</p>
     <h3 class="text-lg font-bold mt-4">CO2 Emissions:</h3>
     <p class="ml-2">{{ modelData.co2_eq_emissions }} g</p>
+    <h3 class="text-lg font-bold mt-4">Safetensors:</h3>
+    <p class="ml-2">{{ modelData.safetensors }}</p>
+    <h3 class="text-lg font-bold mt-4">Downloads:</h3>
+    <p class="ml-2">{{ modelData.downloads }}</p>
   </div>
   <div v-if="errorMessage" class="text-red-500 mt-10">{{ errorMessage }}</div>
 </template>
