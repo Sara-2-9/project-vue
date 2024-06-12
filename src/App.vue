@@ -25,12 +25,19 @@ import { RouterLink, RouterView } from 'vue-router'
 
   <RouterView />
 
-  <footer class="mt-16 xl:mx-20">
+  <footer class="mt-16 xl:mx-20 flex flex-row items-center justify-between">
     <p>
       👩‍💻 Credit:
       <a href="https://www.linkedin.com/in/sara-moro-29-" target="_blank" class="underline"
         >Sara Moro</a
       >
     </p>
+    <a href="https://www.thegreenwebfoundation.org" target="_blank">
+      <img
+        src="https://app.greenweb.org/api/v3/greencheckimage/co2-emission-checker-ai-models.netlify.app?nocache=true"
+        alt="This website runs on green hosting - verified by thegreenwebfoundation.org"
+        width="200px"
+        height="95px"
+    /></a>
   </footer>
 </template>
