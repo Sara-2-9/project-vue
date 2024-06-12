@@ -23,7 +23,6 @@ export default defineComponent({
       try {
         const response = await fetch(`https://huggingface.co/api/models/${modelName.value}`)
         if (!response.ok) {
-          console.log(response.status)
           if (response.status == 401)
             throw new Error(
               'Incorrect request or model not found or access to the model is limited.'
@@ -34,13 +33,13 @@ export default defineComponent({
         if (model) {
           modelData.value = {
             modelId: model.modelId,
-            pipeline_tag: model.pipeline_tag,
+            pipeline_tag: model?.pipeline_tag ?? 'Unknown',
             co2_eq_emissions:
               model.cardData?.co2_eq_emissions?.emissions ??
               model.cardData?.co2_eq_emissions ??
               'Unknown',
-            safetensors: model.safetensors.total,
-            downloads: model.downloads
+            safetensors: model?.safetensors?.total ?? 'Unknown',
+            downloads: model?.downloads ?? 'Unknown'
           }
           errorMessage.value = ''
         }

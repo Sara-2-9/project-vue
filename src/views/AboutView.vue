@@ -1,5 +1,9 @@
+<script setup lang="ts">
+import AboutProject from '../components/AboutProject.vue'
+</script>
+
 <template>
-  <div class="mt-8">
-    <h1>About page</h1>
-  </div>
+  <main class="mt-8 xl:mx-20">
+    <AboutProject />
+  </main>
 </template>

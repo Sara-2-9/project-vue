@@ -5,7 +5,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header class="flex items-center border-b-2">
     <RouterLink to="/" class="mb-2">
-      <img alt="Vue logo" class="w-48" src="@/assets/co2-emission-checker-icon.png"
+      <img alt="Vue logo" class="w-48 min-w-10" src="@/assets/co2-emission-checker-icon.png"
     /></RouterLink>
 
     <nav class="ml-auto">
@@ -24,4 +24,13 @@ import { RouterLink, RouterView } from 'vue-router'
   </header>
 
   <RouterView />
+
+  <footer class="mt-16 xl:mx-20">
+    <p>
+      👩‍💻 Credit:
+      <a href="https://www.linkedin.com/in/sara-moro-29-" target="_blank" class="underline"
+        >Sara Moro</a
+      >
+    </p>
+  </footer>
 </template>

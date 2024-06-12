@@ -3,7 +3,7 @@ import FormItem from '../components/FormItem.vue'
 </script>
 
 <template>
-  <div class="mt-8">
+  <main class="mt-8 xl:mx-20">
     <FormItem />
-  </div>
+  </main>
 </template>
