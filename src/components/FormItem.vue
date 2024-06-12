@@ -68,9 +68,12 @@ export default defineComponent({
       v-model="modelName"
       id="modelName"
       required
-      class="w-full border border-blue-500 rounded-sm p-2"
+      class="w-full border border-blue-500 rounded-sm p-2 text-green-500"
     />
-    <button type="submit" class="border rounded-md mt-4 py-2 px-4 font-semibold hover:bg-slate-300">
+    <button
+      type="submit"
+      class="border rounded-md mt-4 py-2 px-4 font-semibold hover:bg-slate-200 hover:text-green-500"
+    >
       Check Emission
     </button>
   </form>
